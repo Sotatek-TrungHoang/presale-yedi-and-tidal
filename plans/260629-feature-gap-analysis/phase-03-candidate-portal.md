@@ -21,11 +21,15 @@ so it is the highest-traffic surface and must be mobile-responsive.
   that is currently completed *by admin*, not the candidate.
 - 🔴 No candidate-facing app: no profile self-edit, no document upload, no job search, no apply,
   no booking accept, no timesheet, no payslip view.
-- ⚠️ **BUT — strong signal a candidate capture flow already exists** *(black-box)*: candidate records hold
-  **real video-verification + ID image + signed contract** (`evidences/blackbox/t2-candidate-identification-tab.png`,
-  `t2-candidate-contracts-tab.png`). That data did not appear by hand — some candidate-facing onboarding/capture
-  pipeline likely runs outside the admin. **Investigate before sizing this phase** — if a candidate front-end
-  already exists, large parts of 3.2/3.4/3.6 shrink from 🔴 to 🟡. This is the single highest-value unknown.
+- 🔴 **No live candidate front-end exists** *(domain recon verified 2026-06-29)*: `tidalagency.co.uk` =
+  marketing site only (no login/register); `app.tidalagency.co.uk` = bare nginx 403 placeholder, nothing
+  deployed (`/login`, `/api`, `/register` all 404); the Filament admin is the only running app.
+  (evidence: `evidences/blackbox/t5-marketing-site-home.png`)
+- Candidate records DO hold real video-verification + ID + signed-contract data
+  (`evidences/blackbox/t2-candidate-identification-tab.png`, `t2-candidate-contracts-tab.png`), but with no
+  live capture surface and all candidates/login `@ne6.studio` (the build agency), this is **most likely
+  dev/test seed data** — NOT evidence of a working candidate pipeline. Treat this phase as **greenfield**.
+  (Open: confirm whether an unreleased **mobile app** exists — marketing claims an "OnDemand App" but none found live.)
 
 ## Production-Grade Target
 - **Onboarding wizard**: personal details, address, right-to-work evidence upload, qualifications,

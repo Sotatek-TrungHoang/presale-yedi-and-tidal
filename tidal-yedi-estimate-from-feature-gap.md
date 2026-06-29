@@ -103,11 +103,14 @@ The earlier number was **optimistic and under-scoped** — surfaced exactly by d
 - **Black-box behavioral test done** (`tidal-blackbox-test-findings.md`) — the band **still holds**: some
   items shrank (Application CRUD+aggregation works; evidence capture is real), some grew (no admin RBAC;
   Declarations create is a production bug; Booking entity still greenfield). Net ~neutral.
-- Biggest swing factors: **(a) whether a candidate onboarding/capture front-end already exists** (black-box
-  found real video/ID/contract data → could cut P3/P6 meaningfully — HIGHEST-VALUE unknown);
-  (b) whether Invoice/Payslip/Booking have hidden backend services not wired to UI (could cut P5/P8);
-  (c) candidate employment model PAYE/umbrella/self-employed (drives P8/P9 tax); (d) single-hire vs
-  multi-slot adverts (P4/P5 schema); (e) Yedi code-divergence (P12).
+- **Resolved (domain recon):** no live brand/candidate front-end exists — `tidalagency.co.uk` is marketing
+  only, `app.tidalagency.co.uk` is an empty nginx 403 placeholder, Filament admin is the only running app.
+  Candidate evidence data is most likely dev seed (`@ne6.studio`). → **P2/P3 portals confirmed greenfield**
+  (the optimistic "could shrink P3/P6" reducer is removed; estimate stands, not reduced).
+- Remaining swing factors: **(a)** whether Invoice/Payslip/Booking have hidden backend services not wired to
+  UI (could cut P5/P8); **(b)** candidate employment model PAYE/umbrella/self-employed (drives P8/P9 tax);
+  **(c)** single-hire vs multi-slot adverts (P4/P5 schema); **(d)** Yedi code-divergence (P12);
+  **(e)** whether an unreleased **mobile app** exists (marketing claims one; none found live).
 
 ## Open questions
 

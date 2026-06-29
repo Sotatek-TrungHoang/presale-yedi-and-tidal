@@ -15,10 +15,13 @@ The platform has **status fields and empty config tables** but **no compliance e
 nothing enforces that a "Compliant" candidate actually has the required evidence.
 
 ## Current State (verified — incl. black-box behavioral test)
-- ✅ **Real evidence capture EXISTS in data** *(black-box, candidate id=2)*: Identification tab shows
-  **Photograph, Evidence of ID (image), Video verification (video player), ID number**; Contracts tab shows a
-  **signed "Tidal Employment Contract" + file link**. (evidence: `evidences/blackbox/t2-candidate-identification-tab.png`, `t2-candidate-contracts-tab.png`)
-  ⚠️ This means a **candidate onboarding/capture pipeline already runs somewhere** (likely a candidate-facing flow) — investigate; may reduce scope here and in P3.
+- 🟡 **Evidence DATA exists, but no live capture surface** *(black-box + domain recon)*: candidate id=2's
+  Identification tab shows **Photograph, Evidence of ID (image), Video verification (video player), ID number**;
+  Contracts tab shows a **signed contract + file link** (`evidences/blackbox/t2-candidate-identification-tab.png`,
+  `t2-candidate-contracts-tab.png`). So the **storage model for evidence is real**. BUT there is **no live
+  candidate-facing capture flow** (no front-end exists — `app.` subdomain is an empty nginx placeholder), and
+  all candidates are `@ne6.studio` dev accounts → this data is **most likely dev/test seed**, not proof of a
+  working capture pipeline. Build the candidate upload/capture as **greenfield**; only the storage schema is reusable.
 - ✅ **Required Evidence CRUD works** — create is a **modal/slide-over** (Title, Time-to-complete, Required), persists. (The earlier "empty `/create`" was just because it's modal-based.) (evidence: `t2-required-evidence-modal.png`, `t2-required-evidence-created.png`)
 - ✅ **References workflow exists** — "Update references" modal: repeater of Name/Telephone/Email/Status (e.g. "Sent to Referee"). System policy **References required = 2**. (evidence: `t2-update-references-modal.png`)
 - 🟡 Compliance status (Compliant / Non-compliant / Incomplete / Pending Approval) set manually via "Update status" — a **label, not a computed gate**.
@@ -42,7 +45,7 @@ nothing enforces that a "Compliant" candidate actually has the required evidence
 |---|---------|---------|--------|-----|
 | 6.1 | Compliance status field | 🟡 manual label | Auto-computed gate | Rules engine |
 | 6.2 | Required Evidence catalog | 🟡 CRUD works (modal), unconfigured | Configurable per role/type | Seed + per-role/type + file types/expiry |
-| 6.3 | Document upload | 🟡 capture exists in data | Candidate uploads per item | Confirm/extend existing pipeline (P3) |
+| 6.3 | Document upload | 🔴 no live capture (data=seed); storage schema exists | Candidate uploads per item | Build upload UI/flow greenfield (P3); reuse storage |
 | 6.4 | Verification workflow | 🔴 | Reviewer queue + states | Workflow + admin UI |
 | 6.5 | Expiry tracking | 🔴 | Track + re-request | Scheduled checks (P10) |
 | 6.6 | Declarations issue/sign | 🔴 create BROKEN (upload bug) | Issue + capture acknowledgement | Fix upload bug + issue/sign flow |

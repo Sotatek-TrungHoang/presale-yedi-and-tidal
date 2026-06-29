@@ -7,62 +7,66 @@ effort: "70d (MVP 54d)"
 dependencies: [1]
 ---
 
-# Phase 3: Candidate-Facing Portal (responsive web)
+# Phase 3: Portal cho candidate (web responsive)
 
-## Overview
-Toàn bộ web surface phía candidate. **Chưa tồn tại** — candidates đang được admin quản lý.
-Đây là nơi đa số candidates dành thời gian (tìm shifts, chứng minh right-to-work, được trả lương),
-nên là surface có traffic cao nhất và bắt buộc phải mobile-responsive.
+## Tổng quan
+Toàn bộ bề mặt web phía candidate. **Chưa tồn tại** — candidate đang được admin quản lý thủ công.
+Đây là nơi candidate dành phần lớn thời gian (tìm shift, chứng minh right-to-work, nhận lương),
+nên là bề mặt có lưu lượng cao nhất và bắt buộc phải mobile-responsive.
 
-## Current State (verified)
-- 🟡 Candidate entity là model giàu nhất: 4 tabs (Personal / Identification / Work / Contracts),
-  status + compliance, references action, login account. (evidence: `03-candidate-detail.png`, `applicants/create`)
-- 🟡 Candidate statuses tồn tại (Incomplete / Pending Approval / Active) — ngụ ý một onboarding funnel
-  hiện đang được hoàn tất *bởi admin*, không phải candidate.
-- 🔴 Không có app phía candidate: no profile self-edit, no document upload, no job search, no apply,
-  no booking accept, no timesheet, no payslip view.
-- ⚠️ **NHƯNG — tín hiệu mạnh cho thấy một candidate capture flow đã tồn tại sẵn** *(black-box)*: bản ghi candidate chứa
-  **video-verification + ID image + signed contract thật** (`evidences/blackbox/t2-candidate-identification-tab.png`,
-  `t2-candidate-contracts-tab.png`). Dữ liệu đó không thể nhập bằng tay — nhiều khả năng có một pipeline onboarding/capture
-  hướng candidate chạy bên ngoài admin. **Điều tra trước khi sizing phase này** — nếu candidate front-end
-  đã tồn tại, phần lớn 3.2/3.4/3.6 co từ 🔴 xuống 🟡. Đây là ẩn số có giá trị cao nhất.
+## Hiện trạng (đã verify)
+- 🟡 Entity candidate là model giàu dữ liệu nhất: 4 tab (Personal / Identification / Work / Contracts),
+  status + compliance, action references, tài khoản đăng nhập. (evidence: `03-candidate-detail.png`, `applicants/create`)
+- 🟡 Các status candidate đã có (Incomplete / Pending Approval / Active) — ngụ ý một onboarding funnel
+  hiện đang được hoàn tất *bởi admin*, không phải bởi candidate.
+- 🔴 Chưa có app phía candidate: không tự sửa profile, không upload tài liệu, không tìm việc, không apply,
+  không accept booking, không timesheet, không xem payslip.
+- 🔴 **Không tồn tại front-end candidate live nào** *(domain recon đã verify 2026-06-29)*: `tidalagency.co.uk` =
+  chỉ là marketing site (không có login/register); `app.tidalagency.co.uk` = placeholder nginx 403 rỗng, chưa
+  deploy gì (`/login`, `/api`, `/register` đều 404); Filament admin là app đang chạy duy nhất.
+  (evidence: `evidences/blackbox/t5-marketing-site-home.png`)
+- Record candidate CÓ chứa dữ liệu video-verification + ID + signed-contract thật
+  (`evidences/blackbox/t2-candidate-identification-tab.png`, `t2-candidate-contracts-tab.png`), nhưng không có
+  bề mặt capture live nào và toàn bộ candidate/login đều `@ne6.studio` (build agency), nên đây **rất có khả năng
+  là dev/test seed data** — KHÔNG phải bằng chứng về một candidate pipeline đang hoạt động. Coi phase này là **greenfield**.
+  (Open: xác nhận liệu có **mobile app** chưa release hay không — marketing tuyên bố có "OnDemand App" nhưng không tìm thấy bản live nào.)
 
-## Production-Grade Target
-- **Onboarding wizard**: personal details, address, upload right-to-work evidence, qualifications,
+## Mục tiêu mức Production
+- **Onboarding wizard**: thông tin cá nhân, địa chỉ, upload evidence right-to-work, qualifications,
   declarations, references → chuyển Incomplete → Pending → Compliant/Active.
-- **Document upload** cho từng Required Evidence item (passport, visa, DBS, v.v.) kèm status feedback.
-- **Browse/search adverts**: filter theo role, type, location, date; xem pay rate (net of candidate charge).
-- **Apply** vào adverts; track application status.
-- **Accept/decline bookings**; set availability/calendar.
-- **Shift management**: xem upcoming shifts, **clock-in/out hoặc submit timesheet** (P7).
-- **Payslips**: list + download PDF (P8).
-- Notifications (offers, compliance reminders, shift reminders) (P10).
-- Profile completeness meter + compliance status.
+- **Upload tài liệu** cho từng mục Required Evidence (passport, visa, DBS, v.v.) kèm phản hồi status.
+- **Browse/search advert**: lọc theo role, type, location, date; xem pay rate (đã trừ candidate charge).
+- **Apply** vào advert; theo dõi trạng thái application.
+- **Accept/decline booking**; thiết lập availability/calendar.
+- **Quản lý shift**: xem các shift sắp tới, **clock-in/out hoặc submit timesheet** (P7).
+- **Payslip**: liệt kê + tải PDF (P8).
+- Notification (offer, nhắc compliance, nhắc shift) (P10).
+- Thanh đo độ hoàn thiện profile + status compliance.
 
-## Feature Gap Matrix
-| # | Feature | Current | Target | Gap |
+## Ma trận Feature Gap
+| # | Feature | Hiện tại | Mục tiêu | Gap |
 |---|---------|---------|--------|-----|
-| 3.1 | Candidate dashboard | 🔴 | Status, next shift, action items | New responsive surface |
-| 3.2 | Onboarding wizard | 🟡 admin-driven | Candidate self-serve funnel | Multi-step UI + state machine |
-| 3.3 | Profile self-edit (4 sections) | 🟡 admin-only | Candidate edit Personal/Work | Scoped forms |
-| 3.4 | Right-to-work doc upload | 🔴 (config rỗng) | Upload theo Required Evidence | Phụ thuộc P6 |
-| 3.5 | Declarations | 🔴 (config rỗng) | Sign required declarations | Phụ thuộc P6 |
-| 3.6 | References | 🟡 admin action | Candidate submit referees, hệ thống thu thập | Reference workflow + emails |
-| 3.7 | Job search/browse | 🔴 | Filterable advert list | Search + public advert view |
-| 3.8 | Apply to advert | 🔴 | One-tap apply + track | Phụ thuộc P5 |
-| 3.9 | Accept/decline booking | 🔴 | Respond to offers | Phụ thuộc P5 |
-| 3.10 | Availability calendar | 🔴 | Set available dates | Availability model |
-| 3.11 | Timesheet / clock | 🔴 | Submit hours mỗi shift | Phụ thuộc P7 |
-| 3.12 | Payslips | 🔴 | List + PDF | Phụ thuộc P8 |
-| 3.13 | Notifications | 🔴 | Offers/reminders | Phụ thuộc P10 |
+| 3.1 | Dashboard candidate | 🔴 | Status, shift kế tiếp, action items | Bề mặt responsive mới |
+| 3.2 | Onboarding wizard | 🟡 admin điều khiển | Candidate tự phục vụ funnel | UI nhiều bước + state machine |
+| 3.3 | Tự sửa profile (4 mục) | 🟡 chỉ admin | Candidate sửa Personal/Work | Form theo phạm vi |
+| 3.4 | Upload tài liệu right-to-work | 🔴 (config rỗng) | Upload theo từng Required Evidence | Phụ thuộc P6 |
+| 3.5 | Declarations | 🔴 (config rỗng) | Ký các declaration bắt buộc | Phụ thuộc P6 |
+| 3.6 | References | 🟡 admin action | Candidate gửi referee, hệ thống thu thập | Workflow reference + email |
+| 3.7 | Tìm/duyệt việc | 🔴 | Danh sách advert có thể lọc | Search + view advert public |
+| 3.8 | Apply vào advert | 🔴 | Apply một chạm + theo dõi | Phụ thuộc P5 |
+| 3.9 | Accept/decline booking | 🔴 | Phản hồi offer | Phụ thuộc P5 |
+| 3.10 | Lịch availability | 🔴 | Thiết lập ngày rảnh | Model availability |
+| 3.11 | Timesheet / clock | 🔴 | Submit giờ theo từng shift | Phụ thuộc P7 |
+| 3.12 | Payslip | 🔴 | Liệt kê + PDF | Phụ thuộc P8 |
+| 3.13 | Notification | 🔴 | Offer/nhắc nhở | Phụ thuộc P10 |
 
-## Build Scope (the gap)
-- App web candidate responsive mới (mobile-first).
-- Onboarding state machine điều khiển các status Incomplete→Pending→Active sẵn có theo hướng self-service.
-- Secure document upload gắn với compliance rules (P6).
-- Job search + apply + offer-response gắn với P5.
-- Availability model (mới).
+## Phạm vi Build (phần gap)
+- Web app candidate responsive mới (mobile-first).
+- Onboarding state machine điều khiển các status Incomplete→Pending→Active sẵn có theo cơ chế tự phục vụ.
+- Upload tài liệu an toàn gắn với các rule compliance (P6).
+- Tìm việc + apply + phản hồi offer gắn với P5.
+- Model availability (mới).
 
-## Risk Assessment
-- Chất lượng mobile-responsive quan trọng nhất ở đây (candidates dùng điện thoại) — tập trung design effort.
-- Right-to-work UX nhạy cảm về pháp lý; phải khớp với P6 compliance rules trước khi ship.
+## Đánh giá Rủi ro
+- Chất lượng mobile-responsive quan trọng nhất ở đây (candidate dùng điện thoại) — tập trung effort thiết kế.
+- UX right-to-work nhạy cảm về mặt pháp lý; phải khớp với các rule compliance P6 trước khi ship.

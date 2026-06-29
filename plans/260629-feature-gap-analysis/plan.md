@@ -62,9 +62,11 @@ muscles and all self-service surfaces are absent**:
 - 🔴 **Core transaction loop stops after Application:** Application persists + updates relations,
   but there is **no Booking entity**, advert status does **not** auto-transition, and **no
   invoice/payslip generation trigger exists anywhere** (verified — not just empty lists).
-- ⚠️ **NEW signal:** candidate records hold real video-verification + ID image + signed contract
-  → a **candidate onboarding/capture flow likely already exists** outside the admin. Investigate —
-  it could materially reduce P3/P6 scope.
+- 🔴 **No live brand/candidate front-end exists** *(domain recon verified)*: `tidalagency.co.uk` is a
+  marketing site (no login/register); `app.tidalagency.co.uk` is a bare nginx 403 placeholder (no app
+  deployed); `admin.tidalagency.co.uk` (Laravel/Filament) is the only real app. The candidate evidence
+  (video/ID/contract) seen in admin is **most likely dev/test seed data** — candidates + login are all
+  `@ne6.studio` (the build agency). So P2/P3 portals are confirmed **greenfield**, not partially built.
 - 🔴 **No admin RBAC** (corrected): user form has no role/permission field; identity is likely
   polymorphic (separate applicant/advertiser/admin tables).
 - 🔴 **No self-service:** no Brand portal, no Candidate portal — accounts exist but there is

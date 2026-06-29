@@ -41,7 +41,7 @@ Audit toàn bộ action trên mọi resource (`t4-*`):
 
 - ✅ **Required Evidence CRUD CHẠY** — create qua **modal/slide-over** (vì vậy route `/create` trống), tạo & lưu & hiện list OK. (evidence: `t2-required-evidence-modal.png`, `t2-required-evidence-created.png`)
 - ✅ **Candidate có EVIDENCE DATA THẬT** — tab Identification: **Photograph, Evidence of ID (ảnh), Video verification (video player), ID number**; tab Contracts: **hợp đồng "Tidal Employment Contract Feb 17" + file link**. (evidence: `t2-candidate-identification-tab.png`, `t2-candidate-contracts-tab.png`)
-  → ⚠️ **Tín hiệu quan trọng:** có một **pipeline thu thập evidence/onboarding candidate đang hoạt động** ở đâu đó (ngoài admin) — video verification + ID + hợp đồng đã ký không tự nhiên có. **Có thể đã tồn tại một luồng candidate-facing** mà ta chưa tìm thấy. → cần điều tra (ảnh hưởng lớn tới scope P3/P6).
+  → **Storage model cho evidence là thật.** NHƯNG (xem Finding 6) **không có front-end candidate live** để capture — nên data này **nhiều khả năng là dev/test seed** (mọi candidate đều `@ne6.studio`), KHÔNG phải bằng chứng pipeline đang chạy. Chỉ schema lưu trữ tái dùng được; phần capture vẫn build mới.
 - ✅ **References workflow có thật** — modal "Update references": repeater Name/Telephone/Email/Status (= "Sent to Referee"). (evidence: `t2-update-references-modal.png`)
 - ✅ **Compliance status** = 4 trạng thái (Incomplete/Pending Approval/Compliant/Non Compliant), set qua "Update status". (evidence: `t2-update-status-modal.png`)
 - 🔴 **Declarations CREATE BỊ VỠ (bug production)** — field Upload bắt buộc luôn fail server (`The data.upload_id... failed to upload` — Livewire temp upload hỏng). KHÔNG tạo nổi declaration. (evidence: `t2-declaration-upload-error.png`)
@@ -62,6 +62,19 @@ Audit toàn bộ action trên mọi resource (`t4-*`):
 
 ---
 
+## Finding 6 — Domain recon: KHÔNG có front-end brand/candidate live
+
+Soi 3 subdomain (read-only, không đăng nhập):
+
+| Subdomain | Thực chất | Bằng chứng |
+|---|---|---|
+| `tidalagency.co.uk` | **Marketing site** (nav: Home/How It Works/About/Contact/Agency) — KHÔNG login/register | nội dung brochure trong iframe; (evidence: `evidences/blackbox/t5-marketing-site-home.png`) |
+| `app.tidalagency.co.uk` | **nginx 403 rỗng — chưa deploy app** | `HTTP 403`, body chỉ "403 Forbidden / nginx", không cookie framework; `/login` `/api` `/register` đều 404 |
+| `admin.tidalagency.co.uk` | **App thật duy nhất** (Laravel/Filament) | `HTTP 200` + cookie `tidal_agency_session` + `XSRF-TOKEN` |
+
+> **Kết luận:** brand/candidate **không có front-end live ở bất kỳ đâu**. `app.` mới là subdomain đặt sẵn, rỗng. → Data evidence ở Finding 3 gần như chắc chắn là **dev seed** (mọi candidate `@ne6.studio` = dev agency). **P2/P3 portal là greenfield**, không được giảm scope.
+> **Còn mở:** marketing quảng cáo "OnDemand App" nhưng không tìm thấy bản live/app-store → cần hỏi khách có **mobile app** (iOS/Android) chưa phát hành không.
+
 ## Finding 5 — [SỬA LẠI finding cũ] Users KHÔNG có RBAC
 
 ⚠️ **Đính chính:** trước đó mình báo Users có "role selector (listbox)" = 🟡 — **SAI**. Black-box xác nhận form Create/Edit user **KHÔNG có field role/permission**, chỉ có Title (Mr/Mrs...) + Email + First/Last name + Password. Cái mình nhầm là dropdown **Title** (danh xưng), không phải role. (evidence: `t4-user-roles.png`, `t4-users-list.png`)
@@ -78,17 +91,17 @@ Audit toàn bộ action trên mọi resource (`t4-*`):
 | P1 Auth | 🟡 "role selector tồn tại" | 🔴 KHÔNG có RBAC; identity có thể polymorphic | **tăng nhẹ** (sửa sai) |
 | P5 Core loop | 🟡 Application "bare scaffold" | Application CRUD + aggregation **chạy thật**; thiếu Booking + downstream | **giảm nhẹ** phần application; Booking vẫn build mới |
 | P6 Compliance | 🟡 status fields, config rỗng | Evidence capture **thật** (ID/video/contract); Required Evidence CRUD chạy; Declarations **vỡ**; enforcement chưa có | **giảm** phần capture, **+bug fix** Declarations |
-| P3 Candidate portal | 🔴 "không tồn tại" | **Có thể đã có luồng onboarding/capture** (video/ID/contract) — CẦN ĐIỀU TRA | **có thể giảm** nếu front-end đã có |
+| P3 Candidate portal | 🔴 "không tồn tại" | **Xác nhận KHÔNG có front-end live** (Finding 6); data evidence = dev seed | **greenfield, KHÔNG giảm** |
 | P4 Adverts | 🟡 manual status | Xác nhận free-select, không state machine | giữ nguyên |
 | P8 Billing | 🟡 config, 0 doc | Generation **xác nhận vắng mặt tuyệt đối** ở UI | giữ nguyên (chắc chắn hơn) |
 
-**Net:** band ước tính (~660 MVP / ~870 full md) **vẫn hợp lý** — vài chỗ giảm (application logic, evidence capture) bù cho vài chỗ tăng (RBAC, fix bug, Booking entity vẫn lớn).
+**Net:** band ước tính (~660 MVP / ~870 full md) **vẫn hợp lý** — chỗ giảm (application logic CRUD chạy thật) bù chỗ tăng (RBAC, fix bug Declarations, Booking entity vẫn lớn). Lưu ý: "evidence capture" KHÔNG còn là chỗ giảm — Finding 6 xác nhận không có front-end live, data là seed → P2/P3 greenfield.
 
 ---
 
 ## Việc cần làm tiếp (mở)
 
-1. **ĐIỀU TRA luồng candidate onboarding/capture** — video verification + ID + signed contract chứng tỏ có front-end/flow đâu đó. Nếu đã có candidate portal/onboarding → giảm đáng kể P3/P6. **Đây là ẩn số có giá trị lớn nhất hiện tại** → hỏi khách + xin source.
+1. ✅ **[ĐÃ GIẢI QUYẾT] Front-end candidate/brand** — domain recon (Finding 6) xác nhận KHÔNG có front-end live; data evidence là dev seed → P2/P3 greenfield. Còn lại: hỏi khách có **mobile app** (iOS/Android) chưa phát hành không (marketing nói "OnDemand App").
 2. **Source code** vẫn cần để: xác nhận mô hình identity (polymorphic?), kiểm tra Invoice/Payslip có service generation ẩn (chưa wire UI) hay chưa build, và sửa bug upload Declarations.
 3. **Báo khách bug:** Declarations create lỗi upload trên production.
 4. **Yedi:** vẫn chưa có URL/login.
