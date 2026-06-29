@@ -74,7 +74,7 @@ Model nhẹ hơn: Status, Compliance (Pending/Compliant/Non-compliant), Name, Em
 
 - Giả định **"Keep & extend" đúng cho data model + admin CRUD** → tái sử dụng tốt.
 - **SAI cho business logic lõi** → phần lõi giao dịch + compliance phải build mới → **đẩy effort backend lên**.
-- Báo giá điều chỉnh: **~US$80k–$99k · ~5.5–6 tháng** (xem `tidal-yedi-bao-gia-uoc-tinh.md` bản cập nhật).
+- Ước tính bottom-up theo từng feature: xem `plans/260629-feature-gap-analysis/` (gap analysis) và `tidal-yedi-uoc-tinh-tu-gap-analysis.md` (ước tính VN). MVP ~660 md; full production-grade ~870 md.
 
 ## Độ tin cậy & rủi ro còn lại
 
