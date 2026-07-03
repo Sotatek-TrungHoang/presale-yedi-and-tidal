@@ -41,6 +41,8 @@
 
 > Contingency 15% (cao hơn 12% thường) vì **chưa xem source**. Audit thu hẹp dải.
 
+> **T2 net-new (client Phase 2, chưa tách dòng trong 14 domain):** Ratings/Feedback 2 chiều ~8 md · Referral ~4 md · Training records ~5 md → **~17 md**. Nằm gọn trong dải Tranche 2 (~210 md) + contingency; **giữ nguyên headline**, chỉ đánh dấu để chốt khi rate card/source về. Availability đã cost trong P5 (model, MVP) + P3 — không phát sinh thêm.
+
 ---
 
 ## Yedi education-compliance delta (mới, ngoài baseline Tidal)

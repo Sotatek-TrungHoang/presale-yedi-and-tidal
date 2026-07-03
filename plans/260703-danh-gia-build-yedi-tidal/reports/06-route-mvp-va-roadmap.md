@@ -43,12 +43,13 @@ Legend: **[C]** = chung 2 platform (làm 1 lần) · **[Y]** riêng Yedi · **[T
 ### MVP / Tranche 1 — "Launch được" (~660 md)
 - **[C]** Auth + RBAC + multi-tenant foundation
 - **[C]** Brand/School portal: post/manage request, review applicants, bookings, invoices view
-- **[C]** Candidate/Teacher portal: onboarding, upload evidence, search, apply, accept, timesheet, payslip view
+- **[C]** Candidate/Teacher portal: onboarding, upload evidence, **set availability**, search, apply, accept, timesheet, payslip view
 - **[C]** Core booking loop (Application→Matching→Offer/Accept→Booking)
+- **[C]** **Availability model + clash detection cơ bản** (không double-book — input matching)
 - **[C]** Compliance engine + enforcement (chỉ compliant mới book được)
 - **[C]** Timesheet (submit→approve→lock)
 - **[C]** Invoice/Payslip generation (PDF); payment **offline-tracked**
-- **[C]** Notification email-first + key SMS
+- **[C]** **Basic notification** (email-first + key SMS: booking confirm, timesheet, compliance alert)
 - **[C]** Security + GDPR baseline + automated tests + CI/CD
 - **[Y]** Lớp compliance giáo dục: DBS number/expiry, safeguarding training, document-expiry gate (**gate bắt buộc go-live Yedi**)
 - **[T]** Tidal go-live trước; talent-pool cơ bản
@@ -61,6 +62,9 @@ Legend: **[C]** = chung 2 platform (làm 1 lần) · **[Y]** riêng Yedi · **[T
 - **[C]** Geo/distance + multi-slot adverts
 - **[C]** Reporting depth (ops KPI: fill rate, time-to-fill; compliance reporting)
 - **[C]** Availability calendar + clash detection nâng cao
+- **[C]** **Ratings & Feedback 2 chiều** (client↔candidate) + reliability tracking → nuôi matching
+- **[C]** **Referral programme** (candidate giới thiệu candidate)
+- **[C]** **Training/onboarding records** (in-app) + expiry
 - **[Y]** Yedi full market enablement + education matching (age group/school type/reliability)
 - **[T]** Client-visibility dashboard đầy đủ ("Tidal OS": coverage/fill/spend/ratings) + talent pool by city/brand
 

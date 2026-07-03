@@ -34,6 +34,7 @@ Bộ deliverable (map thẳng docx §8):
 - Create: `reports/06-uoc-tinh-thoi-gian-chi-phi.md` (§8.5).
 - Create: `reports/06-khuyen-nghi-kien-truc.md` (§8.6, tóm từ Phase 4).
 - Create: `reports/06-assessment-noibo-tieng-viet.md` (bản gộp nội bộ Sotatek — executive summary + 6 mục §8).
+- Create: `reports/07-traceability-reconciliation-gate.md` (gate map matrix↔roadmap/proposal — chống rớt feature).
 - Read: `reports/prior-tidal/tidal-yedi-*` (estimate/effort/proposal cũ), `reports/04-*`, `reports/05-*`.
 
 ## Implementation Steps
@@ -44,6 +45,7 @@ Bộ deliverable (map thẳng docx §8):
 5. **Khuyến nghị kiến trúc:** chốt 1 khuyến nghị từ Phase 4, gắn tác động chi phí (shared tiết kiệm bao nhiêu %).
 6. **Gộp bản assessment nội bộ tiếng Việt:** executive summary + 6 mục, format bảng, thẳng thắn. Kèm phần "giả định & phụ thuộc cần xác nhận" (vd cần source code để chốt vài con số).
 7. **Whole-plan consistency check:** rà lại toàn bộ report, đảm bảo maturity/số liệu nhất quán giữa các file.
+8. **Traceability reconciliation gate (BẮT BUỘC trước khi phát hành proposal):** chạy `reports/07-traceability-reconciliation-gate.md` — map MỌI ID trong ma trận Phase 5 tới đúng 1 đích (MVP/T2/Future/Reuse/Out). ID nào không map được, hoặc 🔴/🟡 mà bị coi là Reuse = FLAG, phải xử lý trước khi chốt. Cross-check ngược: mọi item MVP/T2 phải truy được (gọi tên hoặc gộp rõ) trong proposal .docx. Bước này chặn lỗi "nén lossy" làm rớt feature khỏi proposal (đã xảy ra draft v1: Referral/Training/Ratings/Availability-naming).
 
 ## Success Criteria
 - [ ] Đủ 6 deliverable §8, tiếng Việt, dựa trên evidence Phase 2–5.
@@ -51,6 +53,7 @@ Bộ deliverable (map thẳng docx §8):
 - [ ] Khuyến nghị shared-vs-tách có kết luận dứt khoát + trade-off.
 - [ ] Bản assessment nội bộ Sotatek gộp sẵn sàng để team presale review.
 - [ ] Không mâu thuẫn số liệu giữa các report.
+- [ ] Reconciliation gate PASS: mọi ID matrix Phase 5 map được, không còn FLAG; mọi item MVP/T2 truy được trong proposal.
 
 ## Risk Assessment
 - **Rủi ro:** ước tính thiếu chính xác do không có source → gắn dải (range) + confidence + điều kiện "cần source để chốt", không đưa 1 con số cứng.
