@@ -1,0 +1,6 @@
+#!/bin/bash
+
+./vendor/bin/sail php ./vendor/bin/pint $(git diff --cached --name-only --diff-filter=ACMR | sed 's| |\\ |g')
+git update-index --again
+# ./vendor/bin/sail php ./vendor/bin/phpstan
+# ./vendor/bin/sail php ./vendor/bin/pest -p

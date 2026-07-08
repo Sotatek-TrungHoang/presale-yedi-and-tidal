@@ -1,0 +1,20 @@
+{
+  "@@locale": "en",
+  "appTitle": "Yedi",
+  "@appTitle": {
+    "description": "The title of the application"
+  },
+  "appTagline": "Get hired, with Yedi!",
+  "@appTagline": {
+    "description": "The tagline of the app"
+  },
+  "applicant": "teacher",
+  "advertiser": "school",
+  "applicants": "teachers",
+  "advertisers": "schools",
+  "signUpTitle": "Yedi Sign Up",
+  "dayToDayExplanationApplicants": "Day to Day Jobs are an urgent requirement. They wont be available for long, so apply now.",
+  "dayToDayExplanationAdvertisers": "Day to Day Jobs are an urgent requirement. They wont be available for long, so teachers will need to apply quickly.",
+  "longTermExplanationApplicants": "Long Term Jobs are a long term requirement. They will be available for a while, so you have time to apply.",
+  "longTermExplanationAdvertisers": "Long Term Jobs are a long term requirement. They will be available for a while, so teacher will have time to apply."
+}

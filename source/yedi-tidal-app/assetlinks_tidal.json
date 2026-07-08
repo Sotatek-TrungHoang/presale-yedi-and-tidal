@@ -1,0 +1,9 @@
+[{
+  "relation": ["delegate_permission/common.handle_all_urls"],
+  "target": {
+    "namespace": "android_app",
+    "package_name": "com.ne6.tidal",
+    "sha256_cert_fingerprints":
+    ["F0:8E:0F:47:38:81:D1:EF:0B:99:61:CC:88:9E:62:6D:37:EA:7D:AB:C9:FA:E7:19:DA:A3:B6:1E:EC:7D:5A:F5"]
+  }
+}]

@@ -1,0 +1,27 @@
+# flutter pub run flutter_launcher_icons
+flutter_launcher_icons:
+  image_path: "assets/yedi/icon/app-icon.png"
+
+  android: "launcher_icon"
+  # image_path_android: "assets/yedi/icon/app-icon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  adaptive_icon_background: "#FFF0E4D4"
+  adaptive_icon_foreground: "assets/yedi/icon/app-icon-orange-transparent.png"
+  adaptive_icon_monochrome: "assets/yedi/icon/app-icon-transparent.png"
+  adaptive_icon_foreground_inset: 14
+
+  ios: true
+  image_path_ios: "assets/yedi/icon/app-icon.png"
+  remove_alpha_ios: false
+  image_path_ios_dark_transparent: "assets/yedi/icon/app-icon-transparent.png"
+  image_path_ios_tinted_grayscale: "assets/yedi/icon/app-icon-transparent.png"
+  # background_color_ios: "#EF9F1F"
+
+  web:
+    generate: false
+
+  windows:
+    generate: false
+
+  macos:
+    generate: false
