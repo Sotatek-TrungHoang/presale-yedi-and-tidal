@@ -1,0 +1,42 @@
+# Dependencies
+/vendor
+/node_modules
+
+# Environment / secrets
+.env
+.env.backup
+.env.production
+auth.json
+
+# Build / compiled assets
+/public/build
+/public/hot
+/public/storage
+/bootstrap/ssr
+/bootstrap/cache/*.php
+
+# Laravel storage runtime
+/storage/*.key
+/storage/pulse
+/storage/logs/*.log
+
+# Caches
+/.phpunit.cache
+.phpunit.result.cache
+.phpactor.json
+
+# Local dev environments
+Homestead.json
+Homestead.yaml
+
+# Logs
+npm-debug.log
+yarn-error.log
+
+# Editor / IDE
+/.fleet
+/.idea
+/.nova
+/.vscode
+/.zed
+.DS_Store
