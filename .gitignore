@@ -1,2 +1,8 @@
 evidences/
 client/credentials.txt
+
+# App secrets / Firebase config — untracked (provided out-of-band). Rotate leaked keys.
+source/yedi-tidal-app/.env.yedi
+source/yedi-tidal-app/.env.tidal
+source/yedi-tidal-app/**/google-services.json
+source/yedi-tidal-app/ios/Runner/GoogleService-Info.plist
