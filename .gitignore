@@ -6,3 +6,7 @@ source/yedi-tidal-app/.env.yedi
 source/yedi-tidal-app/.env.tidal
 source/yedi-tidal-app/**/google-services.json
 source/yedi-tidal-app/ios/Runner/GoogleService-Info.plist
+
+# macOS junk
+.DS_Store
+**/.DS_Store
