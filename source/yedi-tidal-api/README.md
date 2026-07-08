@@ -1,66 +1,75 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Yedi/Tidal API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A Laravel 11 white-label marketplace API connecting advertisers (schools/brands) with applicants (teachers/candidates) for shift-work and gig assignments. Single codebase serves two brands via environment configuration. Includes Filament 3 admin panel for compliance review and advert management.
 
-## About Laravel
+**What it does:**
+- Two-sided marketplace: Advertisers post Adverts (shift-based job postings); Applicants apply after compliance gating (references, declarations, right-to-work, evidence, video verification)
+- Compliance enforcement: Admin review of applicant and advertiser profiles before platform access
+- Document generation: Contracts, invoices (to advertisers), payslips (to applicants) via external DocGen service
+- Financial: Calculates advertiser/applicant pay rates and platform charge percentages; money in GBP via Brick Money
+- White-label: `APP_CONFIGURATION=yedi` or `tidal` switches brand terminology, styling, and Filament theme
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Quick Start
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Local development with Sail
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```bash
+git clone <repo>
+cd yedi-tidal-api
 
-## Learning Laravel
+# Start Docker containers (MySQL 8, Redis, Mailpit)
+./vendor/bin/sail up -d
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+# Run migrations
+./vendor/bin/sail artisan migrate
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+# Seed with defaults
+./vendor/bin/sail artisan db:seed
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+# Start dev server + queue + assets (concurrent)
+composer run dev
 
-## Laravel Sponsors
+# Run tests (if any)
+./vendor/bin/sail artisan test
+```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Visit `http://localhost` for landing page; `/admin` for Filament (login: `admin@example.com` / `password`).
 
-### Premium Partners
+## Key Resources
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+- **[CLAUDE.md](./CLAUDE.md)** — Architecture overview, routing, layering, commands
+- **[docs/](./docs/)** — Full documentation:
+  - `project-overview-pdr.md` — Product overview & requirements
+  - `codebase-summary.md` — Directory structure and key files
+  - `code-standards.md` — Coding conventions and patterns
+  - `system-architecture.md` — System design with diagrams
+  - `project-roadmap.md` — Feature inventory and known gaps
+  - `deployment-guide.md` — Production setup and environment variables
 
-## Contributing
+## Stack
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **Framework:** Laravel 11 (PHP 8.2+)
+- **Admin:** Filament 3
+- **API Auth:** Laravel Sanctum
+- **Database:** MySQL 8 (migrations managed)
+- **Cache/Queue:** Redis + Horizon
+- **File Storage:** Local (Sail) or S3 (production)
+- **Money:** Brick Money (GBP)
+- **Auditing:** Owen-It Laravel Auditing (change history)
+- **DTOs:** Spatie Data
+- **PDF Generation:** External DocGen service (via Saloon)
+- **Maps/Geocoding:** Google Maps API
+- **Push Notifications:** Firebase FCM
+- **Error Tracking:** Sentry
+- **Email:** Mailgun (production) or Mailpit (dev)
 
-## Code of Conduct
+## Development Notes
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- Husky pre-commit hook runs Laravel Pint linting (via Sail) — ensure containers running before commit
+- No tests directory yet; PHPUnit config exists but unused
+- Scheduling and queue workers run via Horizon; local dev uses `composer run dev`
+- Both brands use identical codebase; switching via `APP_CONFIGURATION` env var
 
-## Security Vulnerabilities
+## Support
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+See [CLAUDE.md](./CLAUDE.md) for architecture decisions. Docs folder contains full technical reference.
