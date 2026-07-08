@@ -1,3 +1,13 @@
+> ## ⚠️ CẬP NHẬT SAU SOURCE AUDIT (2026-07-08) — ĐỌC TRƯỚC
+> Ước tính **~660 md MVP** dưới đây dựa giả định **portal candidate/client = greenfield ~126 md** (P2+P3). **Source thật LẬT giả định này**: portal đã tồn tại (app Flutter 2 phía ship + API lifecycle/compliance/billing). → **hướng effort dịch từ "rebuild portal" sang "harden + hoàn thiện gap"**, KHÔNG còn build portal từ 0.
+> **CHƯA chốt số md mới lần này** (giữ nguyên số cũ, không sửa) — vì re-estimate phụ thuộc **Open Questions (report 08 §8)** chưa có đáp án: mô hình lao động (payroll), timesheet MVP/Phase-2, DBS-engine có block MVP, matching engine cần cho MVP không, prod 1/nhiều app-server. **Pricing/£ vẫn defer** (chờ rate card Sotatek).
+> **Hướng dịch chuyển (định tính, để tái ước tính khi có đáp án):**
+> - **GIẢM mạnh:** P2+P3 portal (không rebuild — reuse app+API), phần lớn P5 core-loop (lifecycle đã có), P8 billing engine (đã có, chỉ fix).
+> - **PHÁT SINH MỚI (chưa cost đủ trong black-box):** hardening bảo mật (rate-limit, token revoke, secure storage, gỡ secrets) ~ vừa; **idempotency tài chính** (Critical) ~ nhỏ-vừa; **test baseline + CI** ~8–11 md (report 06) + reliability ~9–12 md (report 04); FCM message handler + no-401 (mobile) ~ nhỏ.
+> - **GAP THẬT giữ nguyên là build-new:** timesheet, availability, matching engine, **Yedi DBS/safeguarding structured engine**, reporting/export.
+> → Kỳ vọng: **tổng MVP có khả năng GIẢM ròng** (portal reuse > hardening+gap mới), nhưng **cần đáp Open Questions để chốt**. Chi tiết reusability: **[`../../260708-source-audit-yedi-tidal/reports/08-consolidated-audit-summary.md`] §5**.
+> **proposal docx regeneration + quyết định commercial framing = OUT OF SCOPE round này (defer).** Giữ toàn bộ số black-box bên dưới nguyên trạng để đối chiếu.
+
 # §8.5 Ước tính thời gian & chi phí
 
 > Nội bộ Sotatek · 2026-07-03 · baseline = WBS per-feature 2026-06-29 (`prior-tidal/tidal-yedi-effort-breakdown-by-feature.md`), cộng Yedi delta.

@@ -1,3 +1,6 @@
+> ## ⚠️ CẬP NHẬT SAU SOURCE AUDIT (2026-07-08)
+> Khuyến nghị **shared multi-tenant (hướng A)** dưới đây trước dựa **fingerprint black-box**. Source thật **XÁC NHẬN + nâng confidence**: đúng **1 codebase mono-repo** (`APP_CONFIGURATION=yedi|tidal` cho API, `--flavor` cho app) — white-label switch tại runtime/build, KHÔNG fork per-brand. → **R8 "two forks drifting" phần lớn OVERTURN**; hướng A vững hơn (không chỉ tối ưu chi phí mà là hiện trạng kỹ thuật xác thực). *(Còn lại: xác nhận git remote để chắc không có fork drift lịch sử.)* Chi tiết: **[`../../260708-source-audit-yedi-tidal/reports/08-consolidated-audit-summary.md`]**.
+
 # §8.6 Khuyến nghị kiến trúc — Shared backend vs Tách rời
 
 > Nội bộ Sotatek · 2026-07-03 · tóm từ Phase 4 (`04-cross-platform-comparison.md`).

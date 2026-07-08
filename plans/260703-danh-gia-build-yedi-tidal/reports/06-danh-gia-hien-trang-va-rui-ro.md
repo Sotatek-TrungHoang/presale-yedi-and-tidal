@@ -1,3 +1,11 @@
+> ## ⚠️ CẬP NHẬT SAU SOURCE AUDIT (2026-07-08)
+> Đánh giá dưới đây là **black-box**. Source thật đã lật nhiều điểm — xem đầy đủ ở **[`../../260708-source-audit-yedi-tidal/reports/08-consolidated-audit-summary.md`]**. Tóm tắt đính chính:
+> - **Completeness: ~8% → ~69–77% MVP** (có app Flutter ship v1.0.5+26 2 phía + API lifecycle/compliance/billing thật).
+> - **"Billing vắng mặt tuyệt đối" → SAI**: engine DocGen+Jobs CÓ (buggy, không absent). **"Compliance chỉ nhãn thủ công" → SAI**: enforcement gate CÓ (generic, thiếu DBS-structured). Nhiều **nghi vấn IDOR → thực ra đã authorize đúng**. **VAT 20% CÓ tính**.
+> - **Risk register cập nhật** (bảng đầy đủ ở report 08 §6): R6/R7/R8 phần lớn OVERTURN; R2/R4/R9/R10 CONFIRMED; R1 GIỮ (hạ mức — có gate nhưng thiếu DBS engine); R3 REFRAME (portal authz tốt, admin RBAC thô).
+> - **Risk MỚI (source-only):** idempotency → invoice/payslip trùng; payslip PDF rỗng số tiền; token vĩnh viễn + secrets commit git = account-takeover; double-apply race (thiếu unique DB); FCM notifications hỏng end-user; no-401 handling; 0 test/CI; build script không portable.
+> Giữ nội dung black-box cũ bên dưới để đối chiếu.
+
 # §8.1 Đánh giá hiện trạng + §8.2 Rủi ro kỹ thuật (Yedi + Tidal)
 
 > Nội bộ Sotatek · 2026-07-03 · dựa evidence Phase 2–5.

@@ -1,3 +1,7 @@
+> ## ⚠️ CẬP NHẬT SAU SOURCE AUDIT (2026-07-08)
+> Ma trận dưới đây là **black-box (03/07)** — phần lớn C*/B*/W* bị chấm 🔴 vì chỉ thấy admin panel (mobile portal 403). **Đã re-score đối chiếu SOURCE THẬT** → nhiều 🔴 lật thành ✅/🟡 (có app Flutter 2 phía + API lifecycle/compliance/billing).
+> **Bản re-score chính thức: [`../../260708-source-audit-yedi-tidal/reports/03-feature-completeness-rescored.md`]** — completeness MVP **~8% → ~69% straight / ~77% weighted**; 63 base ID: 22✅/21🟡/20🔴; reconciliation gate PASS, 0 FLAG. Giữ bảng cũ bên dưới để đối chiếu.
+
 # Phase 5 — Ma trận Traceability (Tidal.docx §2–§6 ↔ hiện trạng)
 
 > Đối chiếu từng yêu cầu client với trạng thái đã verify (Phase 2 Tidal + Phase 3 Yedi), 2026-07-03.
